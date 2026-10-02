@@ -4,7 +4,7 @@ description: "Trigger: spec-design-apply, change design token, add design token,
 license: Apache-2.0
 metadata:
   author: "sokaluis"
-  version: "0.5"
+  version: "0.6"
 ---
 
 ## Activation Contract
@@ -39,7 +39,7 @@ Load on handoff from `spec-design-plan` or `spec-design-establish`, or directly 
 
 ## Output Contract
 
-Return: mode, files created or changed, tokens used or changed, lint result, the generated diff when consumers were regenerated, the result of the new-literals scan, and open decisions for the user.
+Return: mode, files created or changed, tokens used or changed, lint result, the generated diff and the before/after value comparison when consumers were regenerated, values left hand-written and why, the result of the new-literals scan, and open decisions for the user.
 
 ## References
 

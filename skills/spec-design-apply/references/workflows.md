@@ -19,8 +19,19 @@ DESIGN.md is trusted here: it leads and the code follows. The Role check lives i
 
 ## Generate (after any DESIGN.md change, or on handoff from spec-design-establish)
 
-1. `npx @google/design.md export --format dtcg DESIGN.md > tokens.json`.
-2. Emit every consumer the project needs that the CLI does not produce (SCSS variables, UI-library theme, CSS-in-JS theme), with a small generator script or Style Dictionary. Tailwind v3/v4 can come straight from the CLI.
-3. Every generated file starts with a "generated from DESIGN.md — do not edit" header.
-4. Remove the hand-written definitions they replace, so each token has one owner.
-5. Propose a CI check that regenerates consumers and fails on diff.
+A project that already has a generator runs it and goes straight to step 6. The other steps set the generator up the first time.
+
+1. Export from DESIGN.md with `npx @google/design.md export --format <format> DESIGN.md`, pinned to one CLI version: `css-vars` for CSS custom properties, `css-tailwind` or `json-tailwind` for Tailwind, `dtcg` for everything else. Feed the output to the generator; do not commit an intermediate `tokens.json` that nothing reads.
+2. Emit every consumer the CLI does not produce (SCSS variables, UI-library theme, CSS-in-JS theme) with a small generator script that has tests, or with Style Dictionary. Compare the export with DESIGN.md first: when the export drops a value (DTCG loses unitless line heights), leave that group hand-written and report it instead of generating a lossy copy.
+3. Every generated file starts with a "generated from DESIGN.md — do not edit" header, and comes out already formatted: run the project's formatter and linter on it. If a pre-commit hook would rewrite a generated file, fix the generator, not the file, or the check in step 7 fails after every commit.
+4. Give each token one owner without renaming the codebase:
+
+   | Hand-written definition | Do |
+   |---|---|
+   | Same name as a generated token | Delete it |
+   | Another name, same value, same role (Role check) | Keep the name and make it an alias of the generated token |
+   | Same value but another role, or no token for it | Leave the literal and report it as an open decision |
+
+5. Prove the wiring is value-neutral. Before it, record the resolved value of every existing custom property and of the theme the app builds; after it, compare. Expect zero differences, ignoring letter case in hex values.
+6. When the run follows an Evolve, the differences must be exactly the approved token changes; anything else is a defect of the wiring.
+7. Give the generator a check mode that regenerates in memory and fails when a file on disk differs, and prove it catches a hand edit. Propose it for CI together with the generator's tests; do not edit the CI workflow without asking.
