@@ -43,3 +43,5 @@ Goal: a DESIGN.md exists before the first component, so the agent never falls ba
 1. Replace opaque literals at ΔE < 2 with the matching generated token, only when the Role check passes.
 2. List everything else with file, value, roles, nearest token, and ΔE for the user. Translucent literals are listed, never replaced by an opaque token.
 3. Run the project's tests, typecheck, and lint; visual changes should be imperceptible.
+
+When `spec-design-plan` hands over a single folder, scope both the audit (`--src <folder>`) and the replacements to it, and hand back when done.

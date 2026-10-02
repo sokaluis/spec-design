@@ -4,7 +4,7 @@ description: "Trigger: UI ticket, requirement, user story, issue, UI task, desig
 license: Apache-2.0
 metadata:
   author: "sokaluis"
-  version: "0.5"
+  version: "0.6"
 ---
 
 ## Activation Contract
@@ -15,10 +15,10 @@ Load when a requirement, ticket, or user story involves UI, before any code is w
 
 - Load `../_shared/spec-design/rules.md` first; its rules apply here.
 - Plan only: write no code and do not edit DESIGN.md. Every piece is handed to the skill that owns it.
-- Take the requirement as text from any source. Never require a specific tracker; read one through its tool only when the user gives a key and the tool exists, otherwise ask for the text.
+- Take the requirement as text from any source and never require a specific tracker. Read one through its tool, read-only, when the user gives a key or asks you to pick a ticket; without a tool, ask for the text.
+- A trusted DESIGN.md does not make a surface ready: check the folders the pieces touch and every dimension (color, type, spacing, radius), not only color.
 - Break down design impact only. List backend, data, and logic work under "Outside design scope".
 - Never fill a gap with an invented value. A piece that needs a new or changed token stays blocked until the user approves the DESIGN.md change.
-- If DESIGN.md is not trusted, stop and hand off to `spec-design-establish` before breaking down.
 
 ## Decision Gates
 
@@ -28,25 +28,23 @@ Load when a requirement, ticket, or user story involves UI, before any code is w
 | Lint errors, or live code colors missing from it | Hand off to `spec-design-establish` (Reconcile) |
 | Trusted | Break the requirement down |
 
-| Piece | Route |
-|---|---|
-| Covered by existing tokens and components | `spec-design-apply`, Use |
-| Needs a new or changed token | `spec-design-apply`, Evolve then Use, after approval |
-| Contradicts DESIGN.md prose | Back to the user |
-| No design impact | Outside design scope |
+Route each piece with the table in `references/breakdown.md`: Use, Evolve then Use, back to the user, a Unify piece for a literal-dominated folder, or outside design scope.
 
 ## Execution Steps
 
+Follow `references/breakdown.md` for each step.
+
 1. Get the requirement text and restate its goal in one sentence.
-2. Run the state check in `references/breakdown.md`; hand off and stop if it fails.
-3. Read DESIGN.md (front matter and prose) and the project's component inventory.
-4. Slice the requirement into pieces and route each one, following `references/breakdown.md`.
-5. Present the breakdown and collect approval for token changes and open decisions.
-6. Hand off the approved pieces to `spec-design-apply`, Evolve pieces first; each built piece then goes to `spec-design-stories` with its acceptance criteria.
+2. Run the state check; hand off and stop if it fails.
+3. Read DESIGN.md (front matter and prose) and build the component inventory, from Storybook's tools or, when it is not running, from the files.
+4. Slice the requirement into pieces, checking every dimension against DESIGN.md.
+5. Run the surface readiness check on the folders the pieces touch.
+6. Route each piece, then present the breakdown and collect approval for token changes and open decisions.
+7. Hand off the approved pieces in order: Unify when approved, Evolve, Use; each built piece then goes to `spec-design-stories` with its acceptance criteria.
 
 ## Output Contract
 
-Return the breakdown in the format of `references/breakdown.md`: state check result, one row per piece with its route, token changes to approve, visual acceptance criteria, items outside design scope, and open decisions.
+Return the breakdown in the format of `references/breakdown.md`, with every section of its template filled or marked as empty.
 
 ## References
 
