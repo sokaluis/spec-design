@@ -1,0 +1,18 @@
+spec-design
+Copyright 2026 sokaluis
+
+This product includes material from third parties:
+
+1. Framework guides
+   Location: skills/spec-design-establish/references/frameworks/
+   Source: https://github.com/google-labs-code/stitch-skills
+           (plugins/stitch-design/skills/extract-design-md/references/)
+   Commit: 3ba70eef603b53ed54cadfb4c776cef9fcc5f243, retrieved 2026-09-30
+   License: Apache-2.0. Copied unmodified; see NOTICE.md and LICENSE in that
+   directory.
+
+2. CSS named colors table
+   Location: skills/_shared/spec-design/named-colors.json
+   Generated from the color-name npm package, version 1.1.4
+   (https://github.com/colorjs/color-name), MIT License. The values are the
+   148 named colors of CSS Color Module Level 4.
