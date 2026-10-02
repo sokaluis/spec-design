@@ -61,7 +61,7 @@ cd skills/_shared/spec-design && python3 -m unittest discover -s tests
 
 ## Status
 
-Skills are versioned individually in their front matter. `spec-design-establish` has been exercised on a real project and `spec-design-plan` (0.6) on one real ticket; `spec-design-stories` and the Generate workflow of `spec-design-apply` have not been run end to end yet.
+Skills are versioned individually in their front matter. `spec-design-establish` has been exercised on a real project and `spec-design-plan` (0.6) on one real ticket, and `spec-design-stories` (0.6) on one real component; the Generate workflow of `spec-design-apply` has not been run end to end yet.
 
 ## License
 

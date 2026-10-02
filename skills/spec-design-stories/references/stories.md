@@ -34,10 +34,26 @@ Never merge several concepts into one story (`SizesAndVariants`); an agent readi
 A story is read by agents through the component manifest, which is built by static analysis.
 
 - Give the component a JSDoc summary above its export: what it is for and when to use it instead of the neighbouring component.
-- Give each prop a JSDoc line in the component's types.
+- Give each prop a JSDoc line in the component's types. Say what a default does when it surprises (a `loading` that starts as `true`).
+- These comments are the only edit this skill makes in a component file. Touch no code there.
 - Give each story a description that says why someone would use that state, not what is on screen.
 - Write content literally in the story or MDX file; values computed at runtime or imported from elsewhere do not reach the manifest.
 - Exclude from the manifest, with `tags: ['!manifest']`, anything an agent must not imitate: anti-pattern demonstrations, deprecated components, human-only reference. Propose it for existing stories of dead components instead of deleting them.
+
+## Verification
+
+1. Storybook must be running for previews and the review. When it is installed but not running, start it with the project's own script without changing its configuration, and say in the output that it was left running.
+2. Get the story IDs from Storybook's tools. Never trust an empty `stories changed` right after writing a story: in Storybook 10.6 the CLI attached to a running server returned nothing for new stories that `--no-attach` and the MCP tool both reported. Confirm with `stories find-by-component` and the component's path.
+3. Run the interactions. `npx storybook tools --help` lists a test tool only when the project has a story test runner.
+
+   | Project | Do |
+   |---|---|
+   | Has a story test runner | Run it on the stories written or changed |
+   | Has none | Do not install one. Optionally check the same assertions with the project's own test runner, leaving no test file behind. Report that Storybook did not execute the interactions and offer the runner as an open decision |
+
+4. Run the project's lint and typecheck on the files touched, and scan them for literals.
+5. Publish the review with `review create`, including every story created in this run. Looking at the rendering is the user's check unless a browser tool is available; say which one happened.
+6. Report any defect the stories exposed (a wrong `colSpan`, a missing state) as a gap handed off, with file and line. Do not fix it here.
 
 ## What a story must not do
 
